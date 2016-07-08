@@ -1,0 +1,51 @@
+<?php require_once('views/templates/header.phtml'); ?>
+
+    <div class="grid bg-dark">
+        <div class="row cells1">
+            <div class="main">
+                <div class="cell">
+                    <?php echo $view->infoBox; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="main padding20 no-padding-bottom">
+    <div class="grid">
+            <h2>Results</h2>
+            <?php
+            $i = 0;
+            if(isset($view->dvds)):
+                foreach($view->dvds as $dvd):
+                    if($i % 6 == 0) {
+                        if($i != 0){
+                            echo '</div>';
+                        }
+                        echo '<div class="row cells6">';
+                    }?>
+                    <div class="cell align-center">
+                        <a href="dvd.php?id=<?php echo $dvd->getId(); ?>">
+                            <div class="image-container" style="height:15rem; width:13rem;">
+                                <div class="frame"><img src="images/<?php echo $dvd->getDvdCover()->getUrl(); ?>"/></div>
+                                <div class="image-overlay op-red">
+                                    <h4><?php echo $dvd->getName(); ?></h4>
+                                    <p><?php echo substr($dvd->getSynopsis(), 0, 100); ?>...</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php
+                $i++;
+                endforeach;
+            endif;
+            ?>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<?php require_once('views/templates/footer.phtml'); ?>

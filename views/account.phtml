@@ -1,0 +1,64 @@
+<?php require_once('views/templates/header.phtml'); ?>
+<br/>
+<div class="main">
+    <?php if(isset($_SESSION['user'])): ?>
+        <h2>Your Account Details</h2>
+        <form>
+            <label>Name</label>
+            <div class="input-control text full-size">
+                <input name="name" type="text" value="<?php echo $view->user->getName(); ?>" disabled>
+            </div>
+
+            <label>Email</label>
+            <div class="input-control text full-size">
+                <input name="email" type="text" value="<?php echo $view->user->getEmail(); ?>" disabled>
+            </div>
+
+            <label>Address</label>
+            <div class="input-control text full-size">
+                <input name="address" type="text" value="<?php echo $view->user->getAddress(); ?>" disabled>
+            </div>
+
+            <label>Mobile Number</label>
+            <div class="input-control text full-size">
+                <input name="mobile" type="text" value="<?php echo $view->user->getMobileNumber(); ?>" disabled>
+            </div>
+        </form>
+        <h2>Your DVDs</h2>
+        <?php
+        $i = 0;
+        if(isset($view->dvds)):
+            if($view->dvds != NULL):
+                foreach($view->dvds as $dvd):
+                    if($i % 6 == 0) {
+                        if($i != 0){
+                            echo '</div>';
+                        }
+                        echo '<div class="row cells6">';
+                    } ?>
+                        <div class="cell align-center">
+                            <a href="dvd.php?id=<?php echo $dvd->getId(); ?>">
+                                <div class="image-container" style="height:15rem; width:13rem;">
+                                    <div class="frame"><img src="images/<?php echo $dvd->getDvdCover()->getUrl(); ?>"/></div>
+                                    <div class="image-overlay op-red">
+                                        <h4><?php echo $dvd->getName(); ?></h4>
+                                        <p><?php echo substr($dvd->getSynopsis(), 0, 100); ?>...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php
+                        $i++;
+                endforeach;
+            else:
+                echo 'You don\'t have any DVDs being rented, why don\'t you order one?';
+            endif;
+        endif;
+        ?>
+        </div>
+    <?php else: ?>
+        <p>Please login before trying to change your account details</p>
+    <?php endif; ?>
+</div>
+
+<?php require_once('views/templates/footer.phtml'); ?>

@@ -1,0 +1,48 @@
+<?php require_once('views/templates/header.phtml'); ?>
+<div class="main">
+    <?php if(isset($_SESSION['user'])): ?>
+    <h1>Your WishList</h1>
+    <?php if(isset($view->wishlist)): ?>
+        <?php if(isset($view->error)): ?>
+            <p class="bg-red fg-white padding10"><b>Error</b>: <?php echo $view->error; ?></p>
+        <?php endif; ?>
+        <div class="grid padding10">
+            <div class="row cells6">
+                <div class="cell align-center">DVD Image</div>
+                <div class="cell colspan3">Title</div>
+                <div class="cell align-center">Available?</div>
+                <div class="cell align-center">Remove</div>
+            </div>
+            <?php
+            $i = 0;
+            foreach($view->wishlist as $item ):?>
+                <div class="row cells6">
+                    <div class="cell align-center"><img src="images/<?php echo $item->getDvdCover()->getUrl(); ?>"/></div>
+                    <div class="cell colspan3"><?php echo $item->getName(); ?><p><?php echo $item->getSynopsis(); ?></p><p><a href="dvd.php?id=<?php echo $item->getId(); ?>">More Info..</a></p></div>
+                    <div class="cell align-center">
+                        <?php if($item->getUser() == null): ?>
+                            <span class="fg-green">Available Now!</span>
+                            <a href="basket.php?action=add&product=<?php echo $item->getId(); ?>" class="button bg-red fg-white">Add to Basket</a>
+                        <?php else: ?>
+                            <span class="fg-red">Not Available!</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="cell align-center"><a href="wishlist.php?action=remove&product=<?php echo $item->getId(); ?>"><span class="mif-cross fg-red"></a></span></div>
+                </div>
+                <?php
+                $i++;
+            endforeach; ?>
+        </div>
+        <div class="place-right">
+            <a class="button fg-black" href="wishlist.php?action=clear">Clear Your Wishlist</a>
+        </div>
+        <div class="clearfix"></div>
+    <?php else: ?>
+        <p>You don't have anything in your wishlist!</p>
+    <?php endif; ?>
+    </div>
+<?php else: ?>
+    <p>To use the wishlist, please register</p>
+<?php endif; ?>
+</div>
+<?php require_once('views/templates/footer.phtml'); ?>

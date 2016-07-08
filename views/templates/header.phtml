@@ -1,0 +1,118 @@
+
+<html>
+<head>
+    <title><?php echo $view->pageTitle; ?></title>
+
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/metro.css" rel="stylesheet"/>
+    <link href="css/metro-schemes.css" rel="stylesheet"/>
+    <link href="css/metro-responsive.css" rel="stylesheet"/>
+    <link href="css/metro-icons.css" rel="stylesheet"/>
+
+    <link href="css/style.css" rel="stylesheet"/>
+</head>
+
+<body class="bg-darker fg-white">
+<div class="app-bar darcula">
+    <div style="width:80%; margin:0 auto;">
+        <a class="app-bar-element" href="index.php" style="padding-top: 9px;"><img src="images/logo-small.png"></a>
+        <span class="app-bar-divider"></span>
+        <ul class="app-bar-menu">
+            <li><a href="display.php">Browse All</a></li>
+
+            <li>
+                <a href="" class="dropdown-toggle">Genres</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <?php foreach($view->genres as $genre):
+                        echo '<li><a href="display.php?type=genres&value='. $genre->getId() .'">'. $genre->getName() .'</a></li>';
+                    endforeach;
+                    ?>
+                </ul>
+            </li>
+
+            <li>
+                <a href="" class="dropdown-toggle">Directors</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <?php foreach($view->directors as $director):
+                        echo '<li><a href="display.php?type=directors&value='. $director->getId() .'">'. $director->getName() .'</a></li>';
+                    endforeach;
+                    ?>
+                </ul>
+            </li>
+
+            <li>
+                <a href="" class="dropdown-toggle">Cast</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <?php foreach($view->cast as $cast):
+                        echo '<li><a href="display.php?type=cast&value='. $cast->getId() .'">'. $cast->getName() .'</a></li>';
+                    endforeach;
+                    ?>
+                </ul>
+            </li>
+        </ul>
+
+    <?php if(!isset($_SESSION['user'])): ?>
+        <div class="app-bar-element place-right">
+            <a class="dropdown-toggle fg-white"><span class="mif-enter"></span> Login</a>
+            <div class="app-bar-drop-container bg-white fg-dark place-right"
+                 data-role="dropdown" data-no-close="true">
+                <div class="padding20">
+                    <form action="login.php" method="post">
+                        <h4 class="text-light">Login to Postflix</h4>
+                        <div class="input-control text">
+                            <span class="mif-user prepend-icon"></span>
+                            <input type="text" name="email" placeholder="Email">
+                        </div>
+                        <div class="input-control text">
+                            <span class="mif-lock prepend-icon"></span>
+                            <input type="password" name="password" placeholder="password">
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" name="submit" value="Login" class="bg-red fg-white">
+                            <input type="reset" value="Reset">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <ul class="app-bar-menu place-right" style="width: 35%;">
+            <li style="width: 100%;" data-flexorderorigin="0" data-flexorder="1" class="padding10 no-padding-top no-padding-bottom">
+                <form action="search.php" method="get">
+                <div class="input-control text full-size">
+                    <span class="mif-search prepend-icon"></span>
+                    <input type="text" name="search" placeholder="Search...">
+                </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<?php if(isset($_SESSION['user'])): ?>
+<div class="fg-white bg-red clear-float">
+    <div class="main">
+        <div class="place-left padding10">
+            Welcome <?php echo $view->user->getName(); ?>  <a href="account.php" class="fg-white fg-hover-red bg-hover-white fade-in padding10"><span class="mif-user icon"></span> My Account</a>
+            <a href="logout.php" class="fg-white fg-hover-red bg-hover-white fade-in padding10"><span class="mif-exit"></span> Logout</a>
+        </div>
+        <div class="place-right padding10">
+
+            <a href="wishlist.php" class="fg-white fg-hover-red bg-hover-white fade-in padding10"><span class="mif-star-full icon"></span> Wishlist</a>
+            <a href="basket.php" class="fg-white fg-hover-red bg-hover-white fade-in padding10"><span class="mif-cart icon"></span> Basket</a>
+        </div>
+    </div>
+</div>
+<?php else: ?>
+
+<div class="fg-white bg-red padding30 align-center">
+    <h1>Welcome to Postflix</h1>
+    <p>We deliver DVDs straight to your doorstep. With an enormous select avaliable to rent, your favourtie flims are a click away. No late fees, no mess, no hassle.</p>
+    <a href="register.php" class="button fg-black">Register Now</a>
+</div>
+<br/>
+<?php endif; ?>

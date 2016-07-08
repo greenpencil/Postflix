@@ -1,0 +1,47 @@
+<?php require_once('views/templates/header.phtml'); ?>
+<div class="main">
+    <?php if(isset($_SESSION['user'])): ?>
+        <h1>Your Basket</h1>
+        <?php if(isset($_SESSION['basket_items'])): ?>
+        <?php if(isset($view->error)): ?>
+            <p class="bg-red fg-white padding10"><b>Error</b>: <?php echo $view->error; ?></p>
+        <?php endif; ?>
+        <div class="grid padding10">
+            <div class="row cells6">
+                <div class="cell align-center">DVD Image</div>
+                <div class="cell colspan3">Title</div>
+                <div class="cell align-center">Cost</div>
+                <div class="cell align-center">Remove</div>
+            </div>
+            <?php
+            $i = 0;
+            foreach($view->basket as $item ):?>
+                <div class="row cells6">
+                    <div class="cell align-center"><img src="images/<?php echo $item->getDvdCover()->getUrl(); ?>"/></div>
+                    <div class="cell colspan3"><?php echo $item->getName(); ?></div>
+                    <div class="cell align-center">£<?php echo $item->getPriceBand()->getPrice() . ' ('.$item->getPriceBand()->getCharacter() . ')'; ?> </div>
+                    <div class="cell align-center"><a href="basket.php?action=remove&position=<?php echo $i; ?>"><span class="mif-cross fg-red"></a></span></div>
+                </div>
+            <?php
+            $i++;
+            endforeach; ?>
+
+            <div class="row cells6">
+                <div class="cell offset3 align-right">Total:</div>
+                <div class="cell align-center">£<?php echo number_format($view->total, 2, '.', ',') ?></div>
+            </div>
+        </div>
+        <div class="place-right">
+            <a class="button bg-red fg-white" href="checkout.php">Checkout Now</a>
+            <a class="button fg-black" href="basket.php?action=clear">Clear Your Basket</a>
+        </div>
+        <div class="clearfix"></div>
+        <?php else: ?>
+            <p>You don't have anything in your basket!</p>
+        <?php endif; ?>
+    </div>
+    <?php else: ?>
+    <p>To use the basket, please register</p>
+    <?php endif; ?>
+</div>
+<?php require_once('views/templates/footer.phtml'); ?>

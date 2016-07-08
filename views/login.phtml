@@ -1,0 +1,33 @@
+<?php require_once('views/templates/header.phtml'); ?>
+
+    <div class="main padding20 no-padding-bottom">
+        <?php if(!isset($_SESSION['user'])): ?>
+            <?php if(isset($view->error)): ?>
+                <p><b>Uh Oh!</b> - <?php echo $view->error ?>, please try again</p>
+            <?php endif; ?>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <div class="row cells1">
+                    <div class="cell">
+                        <label>Email</label>
+                        <div class="input-control text full-size">
+                            <input type="text" name="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row cells1">
+                    <div class="cell">
+                        <label>Password</label>
+                        <div class="input-control text full-size">
+                            <input name="password" type="password">
+                        </div>
+                    </div>
+                </div>
+                <input class="fg-white bg-red" type="submit" value="Submit" name="submit">
+                <input type="reset" value="Reset">
+            </form>
+        <?php else: ?>
+            <p>You are already logged on! Logout first</p>
+        <?php endif; ?>
+    </div>
+
+<?php require_once('views/templates/footer.phtml'); ?>

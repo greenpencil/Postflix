@@ -1,0 +1,86 @@
+<?php require_once('views/templates/header.phtml'); ?>
+    <div class="fg-white padding30" style="background-image: url('images/<?php echo $view->dvd->getDvdSplash()->getUrl(); ?>');border:10px solid #CE352C; border-left:none; border-right:none;"">
+        <div class="main padding20 no-padding-bottom">
+            <div class="grid">
+                <div class="row cells3">
+                    <div class="cell">
+                        <img src="images/<?php echo $view->dvd->getDvdCover()->getUrl(); ?>" width="350px";/>
+                    </div>
+                    <div class="cell colspan2">
+                        <h1><?php echo $view->dvd->getName(); ?></h1>
+                        <p><?php echo $view->dvd->getSynopsis(); ?></p>
+                        <p>Director: <a class="fg-red fg-hover-lightRed" href="display.php?type=directors&value=<?php echo  $view->dvd->getDirector()->getId(); ?>"><?php echo $view->dvd->getDirector()->getName(); ?></a></p>
+                        <p>Starring:
+                            <?php
+                                $i=0;
+                                foreach($view->dvd->getCast() as $cast):
+                                    if($i != 0  && sizeof($view->dvd->getCast() > 1)){ echo ','; }
+                            ?>
+                                <a class="fg-red fg-hover-lightRed" href="display.php?type=cast&value=<?php echo $cast->getId(); ?>"><?php echo $cast->getName(); ?></a>
+                            <?php $i++; endforeach; ?></p>
+                        <p>Genres:
+                            <?php $j=0; foreach($view->dvd->getGenres() as $genre):
+                                if($j != 0 && sizeof($view->dvd->getGenres() > 1)){ echo ','; }?>
+                                <a class="fg-red fg-hover-lightRed" href="display.php?type=genres&value=<?php echo $genre->getId(); ?>"><?php echo $genre->getName(); ?></a>
+                            <?php $j++; endforeach; ?></p>
+                        <p>Priceband: <?php echo $view->dvd->getPriceBand()->getCharacter(); ?> (£<?php echo $view->dvd->getPriceBand()->getPrice(); ?>)</p>
+                        <?php
+                            if($view->dvd->getUser() == NULL):
+                                ?>
+                                <p>This DVD is available</p>
+                                <?php if(isset($_SESSION['user'])): ?>
+                                    <a href="basket.php?action=add&product=<?php echo $view->dvd->getId(); ?>" class="button fg-white bg-red ol-white bg-hover-red fg-hover-white">Rent Now</a>
+                                    <a href="wishlist.php?action=add&product=<?php echo $view->dvd->getId(); ?>" class="button fg-black">Add to my Wishlist</a>
+                            <?php else: ?>
+                                <p>To borrow this DVD and many more, register now!</p>
+                                <?php endif; ?>
+                            <?php
+                            else:
+                                echo '<p>This DVD is not available</p>';
+                                echo '<a href="wishlist.php?action=add&product='.$view->dvd->getId().'" class="button fg-black">Add to my Wishlist</a>';
+                            endif;
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main padding20 no-padding-bottom">
+        <h1>Also
+            <?php
+            // Because all the classes have the same methods for getting DVDs and names, we can do this
+            if( $view->also instanceof Postflix\Director):
+                echo "directed by ";
+            elseif($view->also instanceof Postflix\Genre):
+                echo "in ";
+            elseif($view->also instanceof Postflix\Cast):
+                echo "starring ";
+            endif;
+            echo $view->also->getName(); ?></h1>
+        <div class="grid">
+            <div class="row cells4">
+                <?php
+                $tmp = array_values($view->also->getDvds());
+                shuffle($tmp);
+                foreach(array_slice($tmp, 0, 4) as $dvd):
+                    ?>
+                    <div class="cell align-center">
+                        <a href="dvd.php?id=<?php echo $dvd->getId(); ?>">
+                            <div class="image-container" style="height:19rem; width:13rem;">
+                                <div class="frame"><img src="images/<?php echo $dvd->getDvdCover()->getUrl(); ?>"/></div>
+                                <div class="image-overlay op-red">
+                                    <h4><?php echo $dvd->getName(); ?></h4>
+                                    <p><?php echo substr($dvd->getSynopsis(), 0, 100); ?>...</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <?php
+                endforeach;
+                ?>
+            </div>
+        </div>
+    </div>
+
+
+<?php require_once('views/templates/footer.phtml'); ?>

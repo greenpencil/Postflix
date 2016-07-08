@@ -1,0 +1,73 @@
+<?php require_once('views/templates/header.phtml'); ?>
+
+    <div class="grid bg-dark">
+        <div class="row cells1">
+            <div class="main">
+                <div class="cell">
+                    <h2>Register for Postflix</h2>
+                    <p>Don't worry we'll never share your details with anyone, and we'll only contact you if we have
+                    something important to tell you about your account.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="main padding20 no-padding-bottom">
+    <form data-role="validator" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <div class="row cells1">
+            <div class="cell">
+                <label>Email</label>
+                <div class="input-control text full-size">
+                    <input type="text" data-validate-func="email" name="email" data-validate-hint="Not valid email address" style="padding-right: 5px;">
+                                <span class="input-state-error mif-warning" style="right: 8px;"></span>
+                                <span class="input-state-success mif-checkmark" style="right: 8px;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <label>Password</label>
+                <div class="input-control text full-size">
+                    <input name="password" type="password" data-validate-func="minlength" data-validate-arg="6" data-validate-hint="Your password must be at least 6 characters" style="padding-right: 5px;">
+                    <span class="input-state-error mif-warning" style="right: 8px;"></span>
+                    <span class="input-state-success mif-checkmark" style="right: 8px;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <label>Full Name</label>
+                <div class="input-control text full-size">
+                    <input name="name" type="text" data-validate-func="minlength" data-validate-arg="3" data-validate-hint="Your name must be at least 3 characters" style="padding-right: 5px;">
+                    <span class="input-state-error mif-warning" style="right: 8px;"></span>
+                    <span class="input-state-success mif-checkmark" style="right: 8px;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <label>Full Address (This is where we'll send your DVDs)</label>
+                <div class="input-control text full-size">
+                    <input name="address" type="text" data-validate-func="minlength" data-validate-arg="6" data-validate-hint="Your address must be at least 6 characters" style="padding-right: 5px;">
+                    <span class="input-state-error mif-warning" style="right: 8px;"></span>
+                    <span class="input-state-success mif-checkmark" style="right: 8px;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <label>Mobile Number</label>
+                <div class="input-control text full-size">
+                    <input name="mobile" type="text" data-validate-func="digits" data-validate-hint="Your phone number must only contain digits" style="padding-right: 5px;">
+                    <span class="input-state-error mif-warning" style="right: 8px;"></span>
+                    <span class="input-state-success mif-checkmark" style="right: 8px;"></span>
+
+                </div>
+            </div>
+        </div>
+        <input class="fg-white bg-red" type="submit" value="Submit" name="submit">
+        <input type="reset" value="Reset">
+    </form>
+</div>
+
+<?php require_once('views/templates/footer.phtml'); ?>

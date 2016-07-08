@@ -1,0 +1,39 @@
+<?php require_once('views/templates/header.phtml'); ?>
+        <?php
+    foreach($view->categories as $category):
+        ?>
+        <div class="main padding20 no-padding-bottom">
+
+            <div class="dvd-selection">
+                <h3><?php echo $category['name']; ?></h3>
+            </div>
+            <div class="grid">
+                <div class="row cells4">
+                    <?php
+                    foreach($category['data'] as $dvd):
+                        ?>
+                        <div class="cell align-center">
+                            <a href="dvd.php?id=<?php echo $dvd->getId(); ?>">
+                                <div class="image-container" style="height:19rem; width:13rem;">
+                                    <div class="frame"><img src="images/<?php echo $dvd->getDvdCover()->getUrl(); ?>"/></div>
+                                    <div class="image-overlay op-red">
+                                        <h4><?php echo $dvd->getName(); ?></h4>
+                                        <p><?php echo substr($dvd->getSynopsis(), 0, 100); ?>...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php
+                    endforeach;
+                    ?>
+                </div>
+            </div>
+        </div>
+    <?php
+        endforeach;
+    ?>
+
+    </div>
+
+
+<?php require_once('views/templates/footer.phtml'); ?>

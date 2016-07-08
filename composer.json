@@ -1,0 +1,16 @@
+{
+  "name" : "Kpf/Postflix",
+  "description" : "DVD rental website",
+  "minimum-stability" : "dev",
+  "license" : "proprietary",
+  "authors" : [
+    {
+      "name" : "Katie Paxton-Fear",
+      "email" : "K.Paxton-Fear@edu.salford.ac.uk"
+    }
+  ],
+
+  "autoload" : {
+    "psr-4": { "" : "src/"}
+  }
+}

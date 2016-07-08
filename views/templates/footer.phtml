@@ -1,0 +1,22 @@
+<div class="footer bg-dark fg-white" style="height:3rem;margin-top:2rem;">
+    <div style="width:80%; margin:0 auto;">
+        <br/>
+        2015-2016 &copy; Katie Paxton-Fear All Rights Reserved</a>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="js/metro.js"></script>
+
+<script>
+    $(function() {
+        $('.dvd').click(function(){
+            var offset = $(this).data('pos') - 1;
+            $('#triangle' + $(this).data('row')).removeClass().addClass('cell offset' + offset);
+            $(".dvdinfo[data-row='" + $(this).data('row') + "'][data-pos='" + $(this).data('pos') + "']").slideToggle("slow");
+        });
+    });
+</script>
+</body>
+</html>

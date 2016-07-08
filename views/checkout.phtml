@@ -1,0 +1,19 @@
+<?php require_once('views/templates/header.phtml'); ?>
+<div class="main">
+    <p>Success! You have rented the following DVDs and they will be delivered to the address on your account ASAP!</p>
+    <ul>
+        <?php foreach($view->rented as $item): ?>
+            <li><?php echo $item->getName() ?></li>
+        <?php endforeach; ?>
+    </ul>
+    <?php if(sizeof($view->unavailable) > 0): ?>
+    <p>The following DVDs could not be rented, as they are unavailable</p>
+    <ul>
+        <?php foreach($view->unavailable as $item): ?>
+            <li><?php echo $item->getName() ?></li>
+        <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+</div>
+
+<?php require_once('views/templates/footer.phtml'); ?>
